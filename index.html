@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Chocolate Day 🍫</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #6d4c41, #1b0000);
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* floating hearts & sparkles */
+.heart, .sparkle {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp linear forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
+.card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  padding: 35px;
+  border-radius: 24px;
+  width: 92%;
+  max-width: 430px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  animation: slideIn 1.2s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  color: #ffd180;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  opacity: 0.95;
+  margin-bottom: 22px;
+}
+
+button {
+  background: linear-gradient(135deg, #ffcc80, #ff8f00);
+  border: none;
+  border-radius: 30px;
+  padding: 14px 26px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #3e2723;
+  cursor: pointer;
+  margin: 10px 0;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+}
+
+.hidden { display: none; }
+
+.message {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.big {
+  font-size: 26px;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>🍫 Happy Chocolate Day 🍫</h1>
+  <div class="subtitle">For <strong>Bhoomika Jiii</strong> 💖</div>
+
+  <button onclick="start()">🎁 Tap to Unwrap Chocolates</button>
+
+  <div id="content" class="hidden">
+    <div class="big">🍫 🍩 🍬 🍪</div>
+    <p class="message" id="msg"></p>
+
+    <button onclick="next()">✨ Tap for Another Surprise</button>
+  </div>
+</div>
+
+<script>
+const messages = [
+  "Meri Pyaari Bhoomika Jiii 🥰 — this little page is just for you.",
+  "Every chocolate here is sweet… but none as sweet as you 🍫💖",
+  "If I could, I’d wrap all my feelings for you and gift them today 😌",
+  "You make my days warmer, softer, and a lot happier ❤️I just love you meri cutuu ",
+  "Also… important reminder 🐱 you + cats + me  = best combo ever 😼💕",
+  "I hope this made you smile even a little… because that smile means everything to me ✨",
+  "Okay okay… one last secret is waiting 😏👇"
+];
+
+let i = 0;
+
+function start() {
+  document.getElementById("content").classList.remove("hidden");
+  document.getElementById("msg").textContent = messages[0];
+  i = 1;
+  burst();
+}
+
+function next() {
+  if (i < messages.length) {
+    document.getElementById("msg").textContent = messages[i];
+    burst();
+    i++;
+  } else {
+    document.getElementById("msg").innerHTML =
+      "No matter what… <br><strong>Bhoomika Jiii</strong>, you are my favorite person 🐱💖<br>And this is just the beginning ♾️";
+    burst(true);
+  }
+}
+
+function burst(final = false) {
+  for (let j = 0; j < (final ? 25 : 10); j++) {
+    createFloat(Math.random() > 0.5 ? "💖" : "✨");
+    if (Math.random() > 0.7) createFloat("🐱");
+  }
+}
+
+function createFloat(symbol) {
+  const el = document.createElement("div");
+  el.className = symbol === "✨" ? "sparkle" : "heart";
+  el.textContent = symbol;
+  el.style.left = Math.random() * 100 + "vw";
+  el.style.animationDuration = 3 + Math.random() * 3 + "s";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+}
+</script>
+
+</body>
+</html>
